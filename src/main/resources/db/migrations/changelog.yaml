@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: 001-event-publication.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 002-inventory.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 003-order.yaml
+      relativeToChangelogFile: true

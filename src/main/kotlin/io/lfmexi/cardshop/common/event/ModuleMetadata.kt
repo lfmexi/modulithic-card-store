@@ -1,4 +1,4 @@
-package io.lfmexi.cardshop.catalog.domain.event
+package io.lfmexi.cardshop.common.event
 
 import org.springframework.modulith.NamedInterface
 import org.springframework.modulith.PackageInfo

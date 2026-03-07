@@ -23,6 +23,7 @@ class ProductController(
 }
 
 data class ProductRequest(
+    val shopId: String,
     val name: String,
     val description: String,
     val type: SupportedProductType,
@@ -34,6 +35,7 @@ data class ProductRequest(
                 requireNotNull(cardProductRequest) { "Product cannot have a null cardProductRequest" }
                 ProductCreationCommand
                     .createCardCommand(
+                        shopId = shopId,
                         name = name,
                         description = description,
                         publisher = cardProductRequest.publisherName,
