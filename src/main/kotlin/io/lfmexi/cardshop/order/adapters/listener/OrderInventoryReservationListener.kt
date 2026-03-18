@@ -1,5 +1,6 @@
 package io.lfmexi.cardshop.order.adapters.listener
 
+import io.lfmexi.cardshop.common.event.InventoryReservationCreated
 import io.lfmexi.cardshop.common.event.InventoryReservationRejected
 import io.lfmexi.cardshop.order.application.OrderRejecter
 import io.lfmexi.cardshop.order.domain.RejectOrderCommand
@@ -17,5 +18,10 @@ class OrderInventoryReservationListener(
             shopId = event.shopId,
             productId = event.productId,
         ))
+    }
+
+    @ApplicationModuleListener
+    fun onInventoryReservationCreated(event: InventoryReservationCreated) {
+
     }
 }
