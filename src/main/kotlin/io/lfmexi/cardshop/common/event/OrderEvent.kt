@@ -17,6 +17,19 @@ sealed interface OrderEvent : DomainEvent {
     val occurredAt: Instant
 }
 
+data class OrderCreated(
+    override val orderId: OrderId,
+    override val shopId: ShopId,
+    override val productId: ProductId,
+    override val state: String,
+    override val orderedQuantity: Quantity,
+    override val confirmedQuantity: Quantity,
+    override val orderedPrice: Price,
+    override val currency: String,
+    override val lastConfirmedPrice: Price?,
+    override val occurredAt: Instant
+): OrderEvent
+
 data class OrderRequested(
     override val orderId: OrderId,
     override val shopId: ShopId,

@@ -5,10 +5,10 @@ import io.lfmexi.cardshop.common.domain.ProductId
 import io.lfmexi.cardshop.common.domain.Quantity
 import io.lfmexi.cardshop.common.domain.ShopId
 import io.lfmexi.cardshop.order.application.OrderFetcher
-import io.lfmexi.cardshop.order.application.OrderRequester
+import io.lfmexi.cardshop.order.application.OrderCreator
 import io.lfmexi.cardshop.order.domain.CreateOrderCommand
 import io.lfmexi.cardshop.order.domain.Order
-import io.lfmexi.cardshop.order.domain.OrderRequestResult
+import io.lfmexi.cardshop.order.domain.OrderCreationResult
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
@@ -17,16 +17,16 @@ import java.util.*
 @RestController
 @RequestMapping("/v1/shops/{shopId}/orders")
 class OrderController(
-    private val orderRequester: OrderRequester,
+    private val orderCreator: OrderCreator,
     private val orderFetcher: OrderFetcher,
 ) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun requestOrder(
+    fun createOrder(
         @PathVariable shopId: String,
         @RequestBody request: CreateOrderRequest
     ): Order {
-        val orderResult = orderRequester.request(
+        val orderResult = orderCreator.create(
             command = when (request.side) {
                 OrderSide.BUY -> CreateOrderCommand.buyCommand(
                     shopId = ShopId(shopId),
@@ -46,7 +46,7 @@ class OrderController(
         )
 
         return when (orderResult) {
-            is OrderRequestResult.Success -> orderResult.order
+            is OrderCreationResult.Success -> orderResult.order
             else -> throw IllegalArgumentException("Order request failed")
         }
     }
